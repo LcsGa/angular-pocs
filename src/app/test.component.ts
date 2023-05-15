@@ -1,23 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { AppRouterInputs } from './app.routes';
+import { TestRouterInputs } from './app.routes';
 
 @Component({
   selector: 'test',
   standalone: true,
   template: '',
 })
-export default class TestComponent implements AppRouterInputs {
-  @Input()
-  id!: string;
+export default class TestComponent implements TestRouterInputs {
+  @Input() id!: string;
 
-  @Input()
-  test2!: number;
+  @Input() test2!: number;
 
-  @Input()
-  test3!: boolean | null;
+  @Input() test3!: boolean | null;
 
-  @Input()
-  test4?: string;
+  @Input() test4?: string;
 
   ngOnInit(): void {
     console.log(this.id);
