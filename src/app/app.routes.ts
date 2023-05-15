@@ -1,11 +1,11 @@
-import { Route, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ObservedValueOf, of } from 'rxjs';
 
-type _ExtractRouterInputs<TRoutes extends Route[]> =
+type _ExtractRouterInputs<TRoutes extends Routes> =
   TRoutes extends (infer TRoute)[]
     ? {
         [Key in keyof TRoute as Key extends 'path'
-          ? TRoute[Key] extends `:${infer TPath}`
+          ? TRoute[Key] extends `${string}:${infer TPath}`
             ? TPath
             : never
           : never]: string;
@@ -24,19 +24,17 @@ type _ExtractRouterInputs<TRoutes extends Route[]> =
       }
     : never;
 
-type ExtractRouterInputs<TRoutes extends Route[]> = {
+type ExtractRouterInputs<TRoutes extends Routes> = {
   [Key in keyof _ExtractRouterInputs<TRoutes>]: _ExtractRouterInputs<TRoutes>[Key];
 };
 
-const _routes = [
+export const routes = [
   {
     path: ':id' as const,
     data: { test2: 456 },
     resolve: { test3: () => of<boolean | null>(false) },
     loadComponent: () => import('./test.component'),
   },
-];
+] satisfies Routes;
 
-export const routes = _routes as unknown as Routes;
-
-export type AppRouterInputs = ExtractRouterInputs<typeof _routes>;
+export type AppRouterInputs = ExtractRouterInputs<typeof routes>;
